@@ -1,32 +1,39 @@
 {
-  "products": [
+  "users": [
     {
-      "id": "8f14e45f-ceea-467a-9575-7a2b1c4e9d30",
-      "name": "Aeron Chair",
-      "price": 1395.0,
-      "in_stock": true,
-      "tags": ["furniture", "office"],
-      "dimensions": {"width": 27, "depth": 27, "height": 41}
+      "id": "a3f8c1d2-4b5e-6f7a-8b9c-0d1e2f3a4b5c",
+      "email": "ada@example.com",
+      "name": "Ada Lovelace",
+      "role": "admin",
+      "verified": true,
+      "created_at": "2023-01-15T09:24:00Z",
+      "login_count": 342,
+      "profile": {"city": "London", "timezone": "Europe/London"}
     },
     {
-      "id": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
-      "name": "Standing Desk",
-      "price": 599.99,
-      "in_stock": false,
-      "tags": ["furniture"],
-      "dimensions": {"width": 60, "depth": 30, "height": 48}
+      "id": "b4e9d2c3-5c6f-7a8b-9c0d-1e2f3a4b5c6d",
+      "email": "grace@example.com",
+      "name": "Grace Hopper",
+      "role": "user",
+      "verified": true,
+      "created_at": "2023-04-02T16:10:00Z",
+      "login_count": 88,
+      "profile": {"city": "New York", "timezone": "America/New_York"}
     },
     {
-      "id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
-      "name": "Desk Lamp",
-      "price": 89.5,
-      "in_stock": true,
-      "tags": ["lighting", "office"],
-      "dimensions": {"width": 8, "depth": 8, "height": 18},
-      "discount": 0.15
+      "id": "c5fae3d4-6d7a-8b9c-0d1e-2f3a4b5c6d7e",
+      "email": "linus@example.com",
+      "name": "Linus Torvalds",
+      "role": "user",
+      "verified": false,
+      "created_at": "2023-09-30T22:05:00Z",
+      "login_count": 5,
+      "profile": {"city": "Portland", "timezone": "America/Los_Angeles"},
+      "deactivated_at": null
     }
   ],
-  "count": 3,
-  "currency": "USD",
-  "cursor": null
+  "page": 1,
+  "per_page": 20,
+  "total": 3,
+  "next_cursor": null
 }

@@ -1,7 +1,7 @@
 [
-  {"sku": "TS-001", "price": 19.99, "qty": 120, "on_sale": true},
-  {"sku": "TS-002", "price": 24, "qty": 0, "on_sale": false, "discount": 0.2},
-  {"sku": "TS-003", "price": "call for quote", "qty": 5, "on_sale": false},
-  {"sku": "TS-004", "price": 31.5, "qty": null, "on_sale": true, "discount": 0.1},
-  {"sku": "TS-005", "price": 12.0, "qty": 47, "on_sale": true}
+  {"sku": "WIDGET-01", "price": 12.5, "stock": 240, "active": true},
+  {"sku": "WIDGET-02", "price": 8.0, "stock": 0, "active": false, "note": "discontinued"},
+  {"sku": "WIDGET-03", "price": "TBD", "stock": 15, "active": true},
+  {"sku": "WIDGET-04", "price": 19.99, "stock": null, "active": true, "note": "low stock"},
+  {"sku": "WIDGET-05", "price": 5.25, "stock": 88, "active": false}
 ]
