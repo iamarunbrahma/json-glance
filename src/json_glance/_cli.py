@@ -40,7 +40,6 @@ def _parse(text: str, fmt: str, path: Optional[str]) -> Any:
         fmt == "auto" and path is not None and path.lower().endswith(".json")
     ):
         return json.loads(text)
-    # auto, no extension hint: try whole-document JSON, fall back to JSONL.
     try:
         return json.loads(text)
     except json.JSONDecodeError:
@@ -81,7 +80,6 @@ def main(argv: Optional[List[str]] = None) -> int:
     """CLI entry point. Returns a process exit code."""
     args = _build_parser().parse_args(argv)
 
-    # Read input.
     try:
         if args.file in (None, "-"):
             text = sys.stdin.read()
@@ -104,7 +102,6 @@ def main(argv: Optional[List[str]] = None) -> int:
         print("json-glance: no input", file=sys.stderr)
         return 2
 
-    # Parse.
     try:
         data = _parse(text, args.format, path)
     except (ValueError, json.JSONDecodeError) as exc:
@@ -114,16 +111,12 @@ def main(argv: Optional[List[str]] = None) -> int:
         print("json-glance: invalid JSON: input is too deeply nested", file=sys.stderr)
         return 1
 
-    # Summarize.
     try:
         glance(data, depth=args.depth, max_keys=args.max_keys)
     except ValueError as exc:
         print(f"json-glance: {exc}", file=sys.stderr)
         return 2
     except BrokenPipeError:
-        # Downstream consumer (e.g. `| head`) closed the pipe. Redirect stdout
-        # to devnull so the interpreter's shutdown flush has a valid sink and
-        # does not re-raise BrokenPipeError after main() returns.
         devnull = os.open(os.devnull, os.O_WRONLY)
         os.dup2(devnull, sys.stdout.fileno())
         return 0

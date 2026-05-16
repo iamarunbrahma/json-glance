@@ -17,7 +17,6 @@ _ELBOW = "└─ "
 _PIPE = "│  "
 _GAP = "   "
 
-# In a union, name at most this many kinds inline; the rest collapse to "+N more".
 MAX_VARIANTS = 6
 
 
@@ -28,12 +27,7 @@ class _Part:
 
     token: str
     stats: str
-    structural: Optional[Tuple[str, Any]]  # ("record"|"coll"|"map", payload)
-
-
-# --------------------------------------------------------------------------
-# value formatting
-# --------------------------------------------------------------------------
+    structural: Optional[Tuple[str, Any]]
 
 
 def _fmt_float(value: float) -> str:
@@ -73,11 +67,6 @@ def _count_str(lo: Optional[int], hi: Optional[int]) -> str:
 def _short(value: Any) -> str:
     text = str(value)
     return text if len(text) <= 20 else text[:19] + "…"
-
-
-# --------------------------------------------------------------------------
-# node -> _Part
-# --------------------------------------------------------------------------
 
 
 def _leaf_part(kind: str, leaf: Leaf) -> _Part:
@@ -170,7 +159,6 @@ def _single_part(variant: Tuple[str, int, str, Any]) -> _Part:
         return _record_part(payload)
     if tag == "map":
         return _map_part(payload)
-    # null / cyclic / truncated
     return _Part(name, "", None)
 
 
@@ -182,8 +170,6 @@ def _summarize(node: Node) -> _Part:
     if len(variants) == 1:
         return _single_part(variants[0])
 
-    # Union: name each kind (capped), call out the minority shares, and recurse
-    # into a structural variant only when exactly one exists.
     total = node.total or sum(v[1] for v in variants)
     shown = variants[:MAX_VARIANTS]
     hidden = len(variants) - len(shown)
@@ -192,19 +178,11 @@ def _summarize(node: Node) -> _Part:
         names += f" | +{hidden} more"
     notes = ", ".join(f"{_pct(v[1], total)}% {v[0]}" for v in shown[1:])
     stats = f"({notes})" if notes else ""
-    # Recurse into the dominant structural variant. `variants` is count-sorted,
-    # so structs[0] is the most common structure; showing it beats showing none
-    # when a position mixes (say) a list and a dict.
     structural = None
     structs = [v for v in variants if v[2] in ("coll", "record", "map")]
     if structs:
         structural = (structs[0][2], structs[0][3])
     return _Part(names, stats, structural)
-
-
-# --------------------------------------------------------------------------
-# tree assembly
-# --------------------------------------------------------------------------
 
 
 def _join(part: _Part) -> str:
@@ -249,7 +227,7 @@ def _render_children(part: _Part, prefix: str, lines: List[str], max_keys: int) 
     if tag == "coll":
         coll: Coll = payload
         if coll.child.total == 0:
-            return  # empty collection: the "· 0 items" line already says it
+            return
         cp = _summarize(coll.child)
         lines.append((prefix + _ELBOW + _join(cp)).rstrip())
         _render_children(cp, prefix + _GAP, lines, max_keys)

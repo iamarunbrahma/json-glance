@@ -12,8 +12,6 @@ import re
 import uuid
 from datetime import datetime
 
-# Pragmatic email shape: one "@", a dot in the domain, no whitespace. Good
-# enough for a hint; not an RFC 5322 validator (nothing sane is).
 _EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 

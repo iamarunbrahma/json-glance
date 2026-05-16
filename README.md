@@ -18,22 +18,21 @@ pure standard library, Python 3.9+.
 
 ## What it shows
 
-- **Merged shapes** - a list of 10,000 records collapses into one schema, not
-  10,000 lines. Every dict in an array is folded into a single shape.
-- **Honest denominators** - `(67% missing)` means the key was *absent* from a
-  record; `(20% null)` means the key was *present* but its value was `None`.
-  The two are tracked separately and never conflated.
-- **Type unions** - when a field holds more than one type, it shows as
-  `int | str | null` with the share of each.
-- **Value stats** - integer and float ranges, string-length ranges, boolean
-  true-rates, collection sizes.
-- **Pattern hints** - `~uuid`, `~email`, `~datetime`, shown only when *every*
-  value at that position matches. The `~` means "hint", not a guarantee.
-- **Map detection** - a dict used as a key-value store (many keys, uniform
-  values) is summarized as a map, not dumped as a giant record.
-- **Safe on anything** - never recurses into `__dict__`, never calls your code.
-  Non-JSON values are reported by type name; cycles render `<cycle>` instead of
-  hanging.
+- **Merged shapes** - every dict in an array is folded into a single schema, so
+  a long list of records prints as one shape instead of one block per element.
+- **Honest denominators** - a key absent from a record and a key present with a
+  null value are reported as two distinct facts, never conflated.
+- **Type unions** - when a field holds more than one type, every type observed
+  is listed with the share of values that took it.
+- **Value stats** - numeric ranges, string-length ranges, boolean true-rates,
+  and collection sizes.
+- **Pattern hints** - common string formats such as UUIDs, emails, and
+  timestamps are flagged, but only when every value at that position matches.
+- **Map detection** - a dict used as a key-value store is summarized as a map
+  rather than dumped as a giant record.
+- **Safe on anything** - it never recurses into an object's internals or calls
+  your code; non-JSON values are reported by type name, and cyclic structures
+  are detected instead of causing a hang.
 
 ## Install
 

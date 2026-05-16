@@ -22,19 +22,9 @@ from typing import Any, Dict, FrozenSet, List, Optional
 
 from ._patterns import is_email, is_iso_datetime, is_uuid
 
-# A dict with more keys than this is treated as a *map* (homogeneous key->value
-# store) rather than a *record* (fixed set of named fields).
 MAP_THRESHOLD = 25
 
-# At most this many elements of any single collection are traversed. Keeps a
-# pathological million-item list fast; the summary of a homogeneous list does
-# not get more accurate past a large sample.
 MAX_SAMPLE = 10_000
-
-
-# --------------------------------------------------------------------------
-# Node tree
-# --------------------------------------------------------------------------
 
 
 @dataclass
@@ -46,9 +36,7 @@ class Leaf:
     num_max: Optional[float] = None
     len_min: Optional[int] = None
     len_max: Optional[int] = None
-    true_count: int = 0  # bool only
-    # String-pattern flags start True and are AND-ed across every string seen,
-    # so a flag is still True only if *every* string matched the pattern.
+    true_count: int = 0
     pat_email: bool = True
     pat_uuid: bool = True
     pat_datetime: bool = True
@@ -107,11 +95,6 @@ class Node:
     mapping: Optional[Map] = None
 
 
-# --------------------------------------------------------------------------
-# small helpers
-# --------------------------------------------------------------------------
-
-
 def _opt_min(a: Optional[float], b: Optional[float]) -> Optional[float]:
     if a is None:
         return b
@@ -128,11 +111,6 @@ def _opt_max(a: Optional[float], b: Optional[float]) -> Optional[float]:
     return a if a >= b else b
 
 
-# --------------------------------------------------------------------------
-# describe: one value -> Node
-# --------------------------------------------------------------------------
-
-
 def _scalar_node(value: Any) -> Node:
     """Build a one-value ``Node`` for a non-container value."""
     node = Node(total=1)
@@ -140,7 +118,7 @@ def _scalar_node(value: Any) -> Node:
         node.null = 1
         return node
     vtype = type(value)
-    if vtype is bool:  # bool before int: bool is an int subclass
+    if vtype is bool:
         node.leaves["bool"] = Leaf(count=1, true_count=1 if value else 0)
     elif vtype is int:
         node.leaves["int"] = Leaf(count=1, num_min=value, num_max=value)
@@ -158,8 +136,6 @@ def _scalar_node(value: Any) -> Node:
     elif vtype in (bytes, bytearray):
         node.leaves["bytes"] = Leaf(count=1, len_min=len(value), len_max=len(value))
     else:
-        # Anything else (datetime, Decimal, numpy/pandas objects, custom
-        # classes): record the type name, never recurse, never call user code.
         node.leaves["other:" + vtype.__name__] = Leaf(count=1)
     return node
 
@@ -202,8 +178,6 @@ def _describe_record(value: dict, depth_left: int, path: FrozenSet[int]) -> Reco
 
 
 def _describe_map(value: dict, depth_left: int, path: FrozenSet[int]) -> Map:
-    # `pairs` keeps the true key count (the honest denominator); only the
-    # traversal is capped at MAX_SAMPLE, matching _describe_collection.
     mapping = Map(count=1, pairs=len(value), sampled=len(value) > MAX_SAMPLE)
     for index, (key, child) in enumerate(value.items()):
         if index >= MAX_SAMPLE:
@@ -244,11 +218,6 @@ def _describe_collection(value: Any, depth_left: int, path: FrozenSet[int]) -> N
         child=child,
     )
     return node
-
-
-# --------------------------------------------------------------------------
-# merge: fold two Nodes together
-# --------------------------------------------------------------------------
 
 
 def merge(a: Node, b: Node) -> Node:
@@ -334,7 +303,6 @@ def _merge_dict_aspect(a: Node, b: Node) -> None:
         a.mapping = b.mapping
         return
     if a.mapping is not None or b.mapping is not None:
-        # Once either side is a map, the merged result is a map.
         left = a.mapping if a.mapping is not None else _record_to_map(a.record)
         right = b.mapping if b.mapping is not None else _record_to_map(b.record)
         a.mapping = _merge_maps(left, right)
