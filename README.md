@@ -2,7 +2,7 @@
 
 *See the shape of any JSON or nested data at a glance.*
 
-[![PyPI](https://img.shields.io/pypi/v/json-glance)](https://pypi.org/project/json-glance/)
+[![PyPI](https://img.shields.io/pypi/v/json-glance?cacheSeconds=3600)](https://pypi.org/project/json-glance/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 ![Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)
