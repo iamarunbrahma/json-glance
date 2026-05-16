@@ -1,0 +1,7 @@
+[
+  {"sku": "TS-001", "price": 19.99, "qty": 120, "on_sale": true},
+  {"sku": "TS-002", "price": 24, "qty": 0, "on_sale": false, "discount": 0.2},
+  {"sku": "TS-003", "price": "call for quote", "qty": 5, "on_sale": false},
+  {"sku": "TS-004", "price": 31.5, "qty": null, "on_sale": true, "discount": 0.1},
+  {"sku": "TS-005", "price": 12.0, "qty": 47, "on_sale": true}
+]

@@ -1,0 +1,5 @@
+{"event": "view", "ts": "2024-07-02T09:00:00Z", "session": "s-100", "props": {"page": "/", "load_ms": 210}}
+{"event": "view", "ts": "2024-07-02T09:01:30Z", "session": "s-100", "props": {"page": "/pricing", "load_ms": 305}}
+{"event": "click", "ts": "2024-07-02T09:02:05Z", "session": "s-100", "props": {"page": "/pricing", "load_ms": 90, "element": "cta"}}
+{"event": "view", "ts": "2024-07-02T09:10:00Z", "session": "s-101", "props": {"page": "/", "load_ms": 188}}
+{"event": "error", "ts": "2024-07-02T09:10:42Z", "session": null, "props": {"page": "/", "load_ms": 47}}

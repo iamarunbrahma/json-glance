@@ -1,0 +1,32 @@
+{
+  "products": [
+    {
+      "id": "8f14e45f-ceea-467a-9575-7a2b1c4e9d30",
+      "name": "Aeron Chair",
+      "price": 1395.0,
+      "in_stock": true,
+      "tags": ["furniture", "office"],
+      "dimensions": {"width": 27, "depth": 27, "height": 41}
+    },
+    {
+      "id": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+      "name": "Standing Desk",
+      "price": 599.99,
+      "in_stock": false,
+      "tags": ["furniture"],
+      "dimensions": {"width": 60, "depth": 30, "height": 48}
+    },
+    {
+      "id": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+      "name": "Desk Lamp",
+      "price": 89.5,
+      "in_stock": true,
+      "tags": ["lighting", "office"],
+      "dimensions": {"width": 8, "depth": 8, "height": 18},
+      "discount": 0.15
+    }
+  ],
+  "count": 3,
+  "currency": "USD",
+  "cursor": null
+}
