@@ -50,4 +50,4 @@ def test_zero_max_keys_rejected():
 
 
 def test_version_is_a_string():
-    assert isinstance(__version__, str) and __version__ == "0.1.0"
+    assert isinstance(__version__, str) and __version__ == "0.1.1"

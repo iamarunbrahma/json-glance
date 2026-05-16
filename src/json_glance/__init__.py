@@ -15,7 +15,7 @@ from typing import Any, Optional, TextIO
 from ._core import build
 from ._render import render
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = ["glance", "summary", "__version__"]
 
 

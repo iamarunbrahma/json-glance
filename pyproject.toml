@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "json-glance"
-version = "0.1.0"
+version = "0.1.1"
 description = "df.describe() for JSON and nested data - a human-readable shape summary in one call."
 readme = "README.md"
 requires-python = ">=3.9"
